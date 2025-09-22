@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consigli di Classe - IIS Gregorio Mendel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .day-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #007bff;
+        }
+        
+        .day-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+            text-transform: capitalize;
+        }
+        
+        .cdc-button {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
+        
+        .cdc-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+            background: linear-gradient(135deg, #218838 0%, #1abc9c 100%);
+        }
+        
+        .cdc-button:active {
+            transform: scale(0.98);
+        }
+        
+        .time-info {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .special-schedule {
+            background: linear-gradient(135deg, #fd7e14 0%, #e83e8c 100%);
+        }
+        
+        .special-schedule:hover {
+            background: linear-gradient(135deg, #e8690b 0%, #d91a72 100%);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📅 Consigli di Classe</h1>
+            <p>IIS Gregorio Mendel - Settembre/Ottobre 2025</p>
+        </div>
+        
+        <div class="content">
+            <div class="info-box">
+                <strong>ℹ️ Informazioni:</strong> Clicca sui pulsanti qui sotto per aggiungere i Consigli di Classe al tuo Google Calendar. 
+                Ogni pulsante corrisponde a un singolo consiglio con data, ora, classe e aula specifiche.
+            </div>
+            
+            <div style="background: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; padding: 15px; margin-bottom: 20px;">
+                <strong>📖 Legenda colori:</strong>
+                <div style="display: flex; gap: 25px; margin-top: 8px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 4px;"></div>
+                        <span style="font-size: 0.9em;"><strong>Verde:</strong> Orario standard (60 min)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 20px; height: 20px; background: linear-gradient(135deg, #fd7e14 0%, #e83e8c 100%); border-radius: 4px;"></div>
+                        <span style="font-size: 0.9em;"><strong>Arancione:</strong> Orario speciale (40 min o sovrapposizioni)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calendar-grid">
+                <!-- Lunedì 29 settembre -->
+                <div class="day-card">
+                    <div class="day-title">🗓️ Lunedì 29 Settembre</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%203A&dates=20250929T143000/20250929T153000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 3A</strong><br>
+                        <span class="time-info">14:30 - 15:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%204A&dates=20250929T153000/20250929T163000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 4A</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%205A&dates=20250929T163000/20250929T173000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 5A</strong><br>
+                        <span class="time-info">16:30 - 17:30 • Aula 8</span>
+                    </a>
+                </div>
+
+                <!-- Martedì 30 settembre -->
+                <div class="day-card">
+                    <div class="day-title">🗓️ Martedì 30 Settembre</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%204B&dates=20250930T143000/20250930T153000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 4B</strong><br>
+                        <span class="time-info">14:30 - 15:30 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%203B&dates=20250930T153000/20250930T163000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 3B</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%202B&dates=20250930T163000/20250930T173000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%20(classi%20prime)%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 2B</strong><br>
+                        <span class="time-info">16:30 - 17:30 • Aula 9</span>
+                    </a>
+                </div>
+
+                <!-- Mercoledì 01 ottobre -->
+                <div class="day-card">
+                    <div class="day-title">🗓️ Mercoledì 1 Ottobre</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%205B&dates=20251001T143000/20251001T153000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 5B</strong><br>
+                        <span class="time-info">14:30 - 15:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%201A&dates=20251001T153000/20251001T163000&details=Ordine%20del%20giorno%20(CLASSE%20PRIMA):%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%20e%20criticit%C3%A0%20didattiche%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 1A</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%202A&dates=20251001T163000/20251001T173000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 2A</strong><br>
+                        <span class="time-info">16:30 - 17:30 • Aula 8</span>
+                    </a>
+                </div>
+
+                <!-- Giovedì 02 ottobre -->
+                <div class="day-card">
+                    <div class="day-title">🗓️ Giovedì 2 Ottobre</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%201B&dates=20251002T143000/20251002T153000&details=Ordine%20del%20giorno%20(CLASSE%20PRIMA):%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%20e%20criticit%C3%A0%20didattiche%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 1B</strong><br>
+                        <span class="time-info">14:30 - 15:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%201C&dates=20251002T153000/20251002T163000&details=Ordine%20del%20giorno%20(CLASSE%20PRIMA):%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%20e%20criticit%C3%A0%20didattiche%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 1C</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%202C&dates=20251002T163000/20251002T173000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 2C</strong><br>
+                        <span class="time-info">16:30 - 17:30 • Aula 8</span>
+                    </a>
+                </div>
+
+                <!-- Venerdì 03 ottobre -->
+                <div class="day-card">
+                    <div class="day-title">🗓️ Venerdì 3 Ottobre</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%201PA&dates=20251003T143000/20251003T153000&details=Ordine%20del%20giorno%20(CLASSE%20PRIMA):%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%20e%20criticit%C3%A0%20didattiche%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 1PA</strong><br>
+                        <span class="time-info">14:30 - 15:30 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%202PA&dates=20251003T153000/20251003T163000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 2PA</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%205PA&dates=20251003T153000/20251003T163000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button special-schedule" target="_blank">
+                        <strong>Classe 5PA</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%204PA&dates=20251003T163000/20251003T173000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 4PA</strong><br>
+                        <span class="time-info">16:30 - 17:30 • Aula 9</span>
+                    </a>
+                </div>
+
+                <!-- Lunedì 06 ottobre -->
+                <div class="day-card">
+                    <div class="day-title">🗓️ Lunedì 6 Ottobre</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%203PC&dates=20251006T143000/20251006T153000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 3PC</strong><br>
+                        <span class="time-info">14:30 - 15:30 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%202D&dates=20251006T153000/20251006T163000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 2D</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%204D&dates=20251006T163000/20251006T173000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 4D</strong><br>
+                        <span class="time-info">16:30 - 17:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%203ST&dates=20251006T153000/20251006T161000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button special-schedule" target="_blank">
+                        <strong>Classe 3ST</strong><br>
+                        <span class="time-info">15:30 - 16:10 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%204ST&dates=20251006T161000/20251006T165000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button special-schedule" target="_blank">
+                        <strong>Classe 4ST</strong><br>
+                        <span class="time-info">16:10 - 16:50 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%205ST&dates=20251006T165000/20251006T175000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button special-schedule" target="_blank">
+                        <strong>Classe 5ST</strong><br>
+                        <span class="time-info">16:50 - 17:50 • Aula 9</span>
+                    </a>
+                </div>
+
+                <!-- Martedì 07 ottobre -->
+                <div class="day-card">
+                    <div class="day-title">🗓️ Martedì 7 Ottobre</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%205C&dates=20251007T143000/20251007T153000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 5C</strong><br>
+                        <span class="time-info">14:30 - 15:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%204C&dates=20251007T153000/20251007T163000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 4C</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%203C&dates=20251007T163000/20251007T173000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 3C</strong><br>
+                        <span class="time-info">16:30 - 17:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%203SP&dates=20251007T153000/20251007T161000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button special-schedule" target="_blank">
+                        <strong>Classe 3SP</strong><br>
+                        <span class="time-info">15:30 - 16:10 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%204SP&dates=20251007T161000/20251007T165000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button special-schedule" target="_blank">
+                        <strong>Classe 4SP</strong><br>
+                        <span class="time-info">16:10 - 16:50 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%205SP&dates=20251007T165000/20251007T175000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button special-schedule" target="_blank">
+                        <strong>Classe 5SP</strong><br>
+                        <span class="time-info">16:50 - 17:50 • Aula 9</span>
+                    </a>
+                </div>
+
+                <!-- Mercoledì 08 ottobre -->
+                <div class="day-card">
+                    <div class="day-title">🗓️ Mercoledì 8 Ottobre</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%203PB&dates=20251008T143000/20251008T153000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 3PB</strong><br>
+                        <span class="time-info">14:30 - 15:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%202PB&dates=20251008T153000/20251008T163000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 2PB</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%201PB&dates=20251008T163000/20251008T173000&details=Ordine%20del%20giorno%20(CLASSE%20PRIMA):%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%20e%20criticit%C3%A0%20didattiche%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 1PB</strong><br>
+                        <span class="time-info">16:30 - 17:30 • Aula 8</span>
+                    </a>
+                </div>
+
+                <!-- Giovedì 09 ottobre -->
+                <div class="day-card">
+                    <div class="day-title">🗓️ Giovedì 9 Ottobre</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%203D&dates=20251009T143000/20251009T153000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 3D</strong><br>
+                        <span class="time-info">14:30 - 15:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%205D&dates=20251009T153000/20251009T163000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 5D</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%203PA&dates=20251009T163000/20251009T173000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 3PA</strong><br>
+                        <span class="time-info">16:30 - 17:30 • Aula 9</span>
+                    </a>
+                </div>
+
+                <!-- Venerdì 10 ottobre -->
+                <div class="day-card">
+                    <div class="day-title">🗓️ Venerdì 10 Ottobre</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%201PC&dates=20251010T143000/20251010T153000&details=Ordine%20del%20giorno%20(CLASSE%20PRIMA):%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%20e%20criticit%C3%A0%20didattiche%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 1PC</strong><br>
+                        <span class="time-info">14:30 - 15:30 • Aula 8</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%204PB&dates=20251010T153000/20251010T163000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%209%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 4PB</strong><br>
+                        <span class="time-info">15:30 - 16:30 • Aula 9</span>
+                    </a>
+                    
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Consiglio%20di%20Classe%205PB&dates=20251010T163000/20251010T173000&details=Ordine%20del%20giorno:%0A1.%20Insediamento%20del%20Consiglio%20di%20Classe%0A2.%20Analisi%20situazione%20di%20partenza%0A3.%20Nuovi%20inserimenti%0A4.%20Documentazione%20BES%0A5.%20Programmazione%20annuale%0A6.%20Educazione%20Civica%0A7.%20Formazione%20Scuola%20Lavoro&location=Aula%208%20-%20IIS%20Mendel%20Villa%20Cortese" 
+                       class="cdc-button" target="_blank">
+                        <strong>Classe 5PB</strong><br>
+                        <span class="time-info">16:30 - 17:30 • Aula 8</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>IIS Gregorio Mendel</strong> - Via Ferrazzi, 15 – 20035 Villa Cortese (MI)</p>
+            <p>Per problemi tecnici contatta l'amministrazione scolastica</p>
+        </div>
+    </div>
+    
+    <script>
+        // Aggiungi un po' di animazione ai pulsanti
+        document.querySelectorAll('.cdc-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Feedback visivo quando si clicca
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+        
+        // Mostra un messaggio quando si clicca su un pulsante
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.cdc-button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Non preveniamo il comportamento di default, lasciamo che Google Calendar si apra
+                    console.log('Aggiungendo al calendario: ' + this.querySelector('strong').textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
